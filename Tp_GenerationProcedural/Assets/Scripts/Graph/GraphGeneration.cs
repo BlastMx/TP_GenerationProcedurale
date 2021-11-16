@@ -11,7 +11,11 @@ public class GraphGeneration : MonoBehaviour
     void Start()
     {
         CreateStartNode();
-        CreateDungeon();
+        CreateDungeon(10);
+        FinishDungeon();
+
+        foreach (var node in nodes)
+            Debug.LogError($"Node pos : {node.pos}");
     }
 
     void CreateStartNode()
@@ -29,15 +33,27 @@ public class GraphGeneration : MonoBehaviour
         connections.Add(startConnections);
     }
 
-    void CreateDungeon()
+    void CreateDungeon(int nodesnumber)
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < nodesnumber; i++)
         {
-            Nodes node = new Nodes();
-            Vector2 previousNodePos = nodes[nodes.Count - 1].pos;
+            bool canContinue = true;
+            Vector2 previousNodePos;
 
-            Utils.OrientationToDir(GetOrientation());
-            previousNodePos += Utils.OrientationToDir(GetOrientation());
+            do
+            {
+                previousNodePos = nodes[nodes.Count - 1].pos;
+                previousNodePos += Utils.OrientationToDir(GetOrientation());
+
+                foreach (var _node in nodes)
+                {
+                    if (_node.pos == previousNodePos)
+                        canContinue = false;
+                }
+
+            } while (canContinue == false);
+
+            Nodes node = new Nodes();
 
             node.pos = previousNodePos;
             node._type = Nodes.type.normal;
@@ -50,6 +66,20 @@ public class GraphGeneration : MonoBehaviour
 
             connections.Add(connection);
         }
+    }
+
+    void FinishDungeon()
+    {
+        Nodes endNode = new Nodes();
+        Vector2 previousNodePos = nodes[nodes.Count - 1].pos;
+
+        previousNodePos += Utils.OrientationToDir(Utils.ORIENTATION.NORTH);
+
+        endNode.pos = previousNodePos;
+        endNode._type = Nodes.type.end;
+        endNode.difficulty = 0;
+
+        nodes.Add(endNode);
     }
 
     Utils.ORIENTATION GetOrientation()
