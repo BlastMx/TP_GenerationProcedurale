@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Nodes : MonoBehaviour
 {
+    public void InitNode(Nodes nodes)
+    {
+        pos = nodes.pos;
+        _type = nodes._type;
+        difficulty = nodes.difficulty;
+    }
+
     public Vector2 pos;
 
     public enum type
@@ -16,14 +23,4 @@ public class Nodes : MonoBehaviour
     public type _type;
 
     public int difficulty = 0;
-
-    public enum orientation
-    {
-        NORTH,
-        WEST,
-        EAST,
-        SOUTH
-    }
-
-    public orientation _orientation;
 }

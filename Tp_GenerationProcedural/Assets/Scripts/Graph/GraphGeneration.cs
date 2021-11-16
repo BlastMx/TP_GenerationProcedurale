@@ -7,13 +7,17 @@ public class GraphGeneration : MonoBehaviour
     List<Nodes> nodes = new List<Nodes>();
     List<Connections> connections = new List<Connections>();
 
+    [SerializeField]
+    private GameObject prefabRoom;
+
     // Start is called before the first frame update
     void Start()
     {
         CreateStartNode();
         CreateDungeon(10);
-        FinishDungeon();
         SecondaryPath(5);
+
+        InstanceRoom();
 
         foreach (var node in nodes)
             Debug.LogError($"Node pos : {node.pos}");
@@ -63,28 +67,18 @@ public class GraphGeneration : MonoBehaviour
 
             Nodes node = new Nodes();
 
-            switch (GetOrientation())
-            {
-                case Utils.ORIENTATION.NORTH:
-                    node._orientation = Nodes.orientation.NORTH;
-                    break;
-                case Utils.ORIENTATION.EAST:
-                    node._orientation = Nodes.orientation.EAST;
-                    break;
-                case Utils.ORIENTATION.SOUTH:
-                    node._orientation = Nodes.orientation.SOUTH;
-                    break;
-                case Utils.ORIENTATION.WEST:
-                    node._orientation = Nodes.orientation.WEST;
-                    break;
-
-                default:
-                    break;
-            }
-
             node.pos = previousNodePos;
-            node._type = Nodes.type.normal;
-            node.difficulty = Random.Range(0, 4);
+
+            if(i == nodesnumber - 1)
+            {
+                node._type = Nodes.type.end;
+                node.difficulty = 0;
+            }
+            else
+            {
+                node._type = Nodes.type.normal;
+                node.difficulty = Random.Range(0, 4);
+            }
 
             nodes.Add(node);
 
@@ -93,20 +87,6 @@ public class GraphGeneration : MonoBehaviour
 
             connections.Add(connection);
         }
-    }
-
-    void FinishDungeon()
-    {
-        Nodes endNode = new Nodes();
-        Vector2 previousNodePos = nodes[nodes.Count - 1].pos;
-
-        previousNodePos += Utils.OrientationToDir(Utils.ORIENTATION.NORTH);
-
-        endNode.pos = previousNodePos;
-        endNode._type = Nodes.type.end;
-        endNode.difficulty = 0;
-
-        nodes.Add(endNode);
     }
 
     void SecondaryPath(int nodesnumber)
@@ -179,25 +159,6 @@ public class GraphGeneration : MonoBehaviour
 
             Nodes node = new Nodes();
 
-            switch (GetOrientation())
-            {
-                case Utils.ORIENTATION.NORTH:
-                    node._orientation = Nodes.orientation.NORTH;
-                    break;
-                case Utils.ORIENTATION.EAST:
-                    node._orientation = Nodes.orientation.EAST;
-                    break;
-                case Utils.ORIENTATION.SOUTH:
-                    node._orientation = Nodes.orientation.SOUTH;
-                    break;
-                case Utils.ORIENTATION.WEST:
-                    node._orientation = Nodes.orientation.WEST;
-                    break;
-
-                default:
-                    break;
-            }
-
             node.pos = previousNodePos;
             node._type = Nodes.type.normal;
             node.difficulty = Random.Range(0, 4);
@@ -235,7 +196,14 @@ public class GraphGeneration : MonoBehaviour
 
     #region Instance Prefab
 
-
+    void InstanceRoom()
+    {
+        foreach (var node in nodes)
+        {
+            GameObject room = Instantiate(prefabRoom, new Vector3(node.pos.x * 11, node.pos.y * 9), Quaternion.identity, transform);
+            room.AddComponent<Nodes>().InitNode(node);
+        }
+    }
 
     #endregion Instance Prefab
 }
