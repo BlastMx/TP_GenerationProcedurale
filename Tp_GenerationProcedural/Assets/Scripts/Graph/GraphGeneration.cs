@@ -18,6 +18,8 @@ public class GraphGeneration : MonoBehaviour
             Debug.LogError($"Node pos : {node.pos}");
     }
 
+    #region Abstract graph
+
     void CreateStartNode()
     {
         Nodes startNode = new Nodes();
@@ -48,12 +50,36 @@ public class GraphGeneration : MonoBehaviour
                 foreach (var _node in nodes)
                 {
                     if (_node.pos == previousNodePos)
+                    {
                         canContinue = false;
+                        break;
+                    }
+                    else
+                        canContinue = true;
                 }
 
             } while (canContinue == false);
 
             Nodes node = new Nodes();
+
+            switch (GetOrientation())
+            {
+                case Utils.ORIENTATION.NORTH:
+                    node._orientation = Nodes.orientation.NORTH;
+                    break;
+                case Utils.ORIENTATION.EAST:
+                    node._orientation = Nodes.orientation.EAST;
+                    break;
+                case Utils.ORIENTATION.SOUTH:
+                    node._orientation = Nodes.orientation.SOUTH;
+                    break;
+                case Utils.ORIENTATION.WEST:
+                    node._orientation = Nodes.orientation.WEST;
+                    break;
+
+                default:
+                    break;
+            }
 
             node.pos = previousNodePos;
             node._type = Nodes.type.normal;
@@ -101,4 +127,12 @@ public class GraphGeneration : MonoBehaviour
         }
 
     }
+
+    #endregion Abstract Graph
+
+    #region Instance Prefab
+
+
+
+    #endregion Instance Prefab
 }

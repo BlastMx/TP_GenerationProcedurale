@@ -16,4 +16,14 @@ public class Nodes : MonoBehaviour
     public type _type;
 
     public int difficulty = 0;
+
+    public enum orientation
+    {
+        NORTH,
+        WEST,
+        EAST,
+        SOUTH
+    }
+
+    public orientation _orientation;
 }
