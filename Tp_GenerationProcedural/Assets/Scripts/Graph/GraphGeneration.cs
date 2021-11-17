@@ -152,7 +152,7 @@ public class GraphGeneration : MonoBehaviour
             }
         }
 
-        /*Nodes nodeEnd = new Nodes();
+        Nodes nodeEnd = new Nodes();
 
         Vector2 previousNodePosEnd;
 
@@ -170,7 +170,7 @@ public class GraphGeneration : MonoBehaviour
 
         connections[connections.Count - 1].nextNode = nodeEnd;
 
-        nodes.Add(nodeEnd);*/
+        nodes.Add(nodeEnd);
     }
 
     void SecondaryPath(int nodesnumber)
@@ -220,6 +220,8 @@ public class GraphGeneration : MonoBehaviour
         Connections secondaryConnection = new Connections();
         secondaryConnection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
 
+        secondaryConnection.previousNode = startingNode;
+
         connections.Add(secondaryConnection);
 
         for (int i = 0; i < nodesnumber; i++)
@@ -266,9 +268,8 @@ public class GraphGeneration : MonoBehaviour
 
                 Connections connection = new Connections();
                 connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
-
-                if (i == 0) connection.previousNode = startingNode;
-                else connection.previousNode = node;
+                
+                connection.previousNode = node;
 
                 connections.Add(connection);
             }
