@@ -190,7 +190,8 @@ public class GraphGeneration : MonoBehaviour
                 Connections connection = new Connections();
                 connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
 
-                connection.previousNode = node;
+                if (i == 0) connection.previousNode = startingNode;
+                else connection.previousNode = node;
 
                 connections.Add(connection);
             }
