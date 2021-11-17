@@ -5,4 +5,7 @@ using UnityEngine;
 public class Connections : MonoBehaviour
 {
     public bool hasLocked = false;
+
+    public Nodes previousNode;
+    public Nodes nextNode;
 }

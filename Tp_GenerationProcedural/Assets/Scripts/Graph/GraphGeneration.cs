@@ -37,6 +37,8 @@ public class GraphGeneration : MonoBehaviour
         Connections startConnections = new Connections();
         startConnections.hasLocked = false;
 
+        startConnections.previousNode = startNode;
+
         connections.Add(startConnections);
     }
 
@@ -69,7 +71,11 @@ public class GraphGeneration : MonoBehaviour
 
             node.pos = previousNodePos;
 
-            if(i == nodesnumber - 1)
+            connections[connections.Count - 1].nextNode = node;
+
+            nodes.Add(node);
+
+            if (i == nodesnumber - 1)
             {
                 node._type = Nodes.type.end;
                 node.difficulty = 0;
@@ -78,14 +84,15 @@ public class GraphGeneration : MonoBehaviour
             {
                 node._type = Nodes.type.normal;
                 node.difficulty = Random.Range(0, 4);
+
+                Connections connection = new Connections();
+                connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
+
+                connection.previousNode = node;
+
+                connections.Add(connection);
             }
 
-            nodes.Add(node);
-
-            Connections connection = new Connections();
-            connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
-
-            connections.Add(connection);
         }
     }
 
@@ -133,6 +140,11 @@ public class GraphGeneration : MonoBehaviour
 
         startingNode = checkedNode;
 
+        Connections secondaryConnection = new Connections();
+        secondaryConnection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
+
+        connections.Add(secondaryConnection);
+
         for (int i = 0; i < nodesnumber; i++)
         {
             bool canContinue = true;
@@ -160,15 +172,28 @@ public class GraphGeneration : MonoBehaviour
             Nodes node = new Nodes();
 
             node.pos = previousNodePos;
-            node._type = Nodes.type.normal;
-            node.difficulty = Random.Range(0, 4);
+
+            connections[connections.Count - 1].nextNode = node;
 
             nodes.Add(node);
 
-            Connections connection = new Connections();
-            connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
+            if (i == nodesnumber - 1)
+            {
+                node._type = Nodes.type.end;
+                node.difficulty = 0;
+            }
+            else
+            {
+                node._type = Nodes.type.normal;
+                node.difficulty = Random.Range(0, 4);
 
-            connections.Add(connection);
+                Connections connection = new Connections();
+                connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
+
+                connection.previousNode = node;
+
+                connections.Add(connection);
+            }
         }
     }
 
