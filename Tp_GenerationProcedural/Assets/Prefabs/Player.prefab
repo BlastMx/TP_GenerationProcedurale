@@ -46,7 +46,6 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -128,7 +127,6 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -249,7 +247,8 @@ MonoBehaviour:
     speedMax: 2
     acceleration: 12
     friction: 12
-  attackPrefab: {fileID: 2185964762067344080, guid: fedea07bedcd0dc4b8633fc878bfdc59, type: 3}
+  attackPrefab: {fileID: 2185964762067344080, guid: fedea07bedcd0dc4b8633fc878bfdc59,
+    type: 3}
   attackSpawnPoint: {fileID: 3061304261252655527}
   attackCooldown: 0.3
   orientation: 1
@@ -264,7 +263,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
 --- !u!1 &3061304262789139555
 GameObject:
   m_ObjectHideFlags: 0
