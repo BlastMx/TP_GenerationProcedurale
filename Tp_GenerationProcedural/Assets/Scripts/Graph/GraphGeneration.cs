@@ -19,9 +19,9 @@ public class GraphGeneration : MonoBehaviour
     {
         CreateStartNode();
 
-        InstanceRoom(CreateDungeon(10, connections, nodes, true), connections, false);
+        InstanceRoom(CreateDungeon(10, connections, nodes, true, true), connections, false);
 
-        InstanceSecondaryPath(5);
+        //InstanceSecondaryPath(5);
         InstanceSecondaryPath(2);
     }
 
@@ -38,7 +38,7 @@ public class GraphGeneration : MonoBehaviour
     void CreateStartNode()
     {
         Nodes startNode = new Nodes();
-        startNode.pos = Vector2.zero;
+        startNode.pos = Vector2Int.zero;
         startNode._type = Nodes.type.start;
         startNode.difficulty = 0;
 
@@ -54,12 +54,21 @@ public class GraphGeneration : MonoBehaviour
         
     }
 
-    List<Nodes> CreateDungeon(int nodesnumber, List<Connections> connections, List<Nodes> nodes, bool canEnd)
+    void SetNodesConnections(List<Connections> connections, List<Nodes> nodes)
     {
-        for(int i = 0; i < nodesnumber/2; i++)
+        for(int i = 0; i < nodes.Count - 1; i++)
+        {
+            connections[i].previousNode = nodes[i];
+            connections[i].nextNode = nodes[i + 1];
+        }
+    }
+
+    List<Nodes> CreateDungeon(int nodesnumber, List<Connections> connections, List<Nodes> nodes, bool canEnd, bool asymetric)
+    {
+        for(int i = 0; i < nodesnumber/(asymetric ? 2 : 1); i++)
         {
             bool canContinue = true;
-            Vector2 previousNodePos;
+            Vector2Int previousNodePos;
 
             do
             {
@@ -89,79 +98,21 @@ public class GraphGeneration : MonoBehaviour
 
             connections[connections.Count - 1].nextNode = node;
 
-
             nodes.Add(node);
             globalNodes.Add(node);
 
             node._type = Nodes.type.normal;
-            node.difficulty = Random.Range(0, 4);
+            node.difficulty = UnityEngine.Random.Range(0, 4);
 
-            Connections connection = new Connections();
-            connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
-
-            connection.previousNode = node;
-
-            connections.Add(connection);
-        }
-
-        List<Connections> rConnections = connections;
-        rConnections.Reverse();
-
-        for (int j = nodesnumber/2; j < nodesnumber; j++)
-        {
-            bool canContinue = true;
-            Vector2 previousNodePos;
- 
-            do
+            if (i == nodesnumber - 1)
             {
-                if(j == nodesnumber / 2) {
-                    previousNodePos = nodes[nodes.Count - 1].pos;
-                    previousNodePos += Utils.OrientationToDir(GetOrientation());
-
-                    foreach (var _node in nodes)
-                    {
-                        if (_node.pos == previousNodePos)
-                        {
-                            canContinue = false;
-                            break;
-                        }
-                        else
-                            canContinue = true;
-                    }
-                }
-                else
-                {
-                    Vector2 symPos;
-                    symPos.x = rConnections[j - (nodesnumber / 2)].nextNode.pos.x - rConnections[j - (nodesnumber / 2)].previousNode.pos.x;
-                    symPos.y = rConnections[j - (nodesnumber / 2)].nextNode.pos.y - rConnections[j - (nodesnumber / 2)].previousNode.pos.y;
-
-                    previousNodePos = nodes[nodes.Count - 1].pos + symPos;
-
-                    canContinue = true;
-                }
-
-            } while (canContinue == false);
-
-            Nodes node = new Nodes();
-
-            node.pos = previousNodePos;
-
-            connections[connections.Count - 1].nextNode = node;
-
-            nodes.Add(node);
-
-            if (j == nodesnumber - 1)
-            {
-                if(canEnd)
+                if (canEnd)
                     node._type = Nodes.type.end;
 
                 node.difficulty = 0;
             }
             else
             {
-                node._type = Nodes.type.normal;
-                node.difficulty = UnityEngine.Random.Range(0, 4);
-
                 Connections connection = new Connections();
                 connection.hasLocked = UnityEngine.Random.Range(0, 2) == 0 ? false : true;
 
@@ -171,7 +122,79 @@ public class GraphGeneration : MonoBehaviour
             }
         }
 
+        if (asymetric)
+        {
+            List<Connections> rConnections = connections;
+            rConnections.Reverse();
+
+            for (int j = nodesnumber / 2; j < nodesnumber; j++)
+            {
+                bool canContinue = true;
+                Vector2Int previousNodePos;
+
+                do
+                {
+                    if (j == nodesnumber / 2)
+                    {
+                        previousNodePos = nodes[nodes.Count - 1].pos;
+                        previousNodePos += Utils.OrientationToDir(GetOrientation());
+
+                        foreach (var _node in nodes)
+                        {
+                            if (_node.pos == previousNodePos)
+                            {
+                                canContinue = false;
+                                break;
+                            }
+                            else
+                                canContinue = true;
+                        }
+                    }
+                    else
+                    {
+                        Vector2Int symPos = Vector2Int.zero;
+                        symPos.x = rConnections[j - (nodesnumber / 2)].nextNode.pos.x - rConnections[j - (nodesnumber / 2)].previousNode.pos.x;
+                        symPos.y = rConnections[j - (nodesnumber / 2)].nextNode.pos.y - rConnections[j - (nodesnumber / 2)].previousNode.pos.y;
+
+                        previousNodePos = nodes[nodes.Count - 1].pos + symPos;
+
+                        canContinue = true;
+                    }
+
+                } while (canContinue == false);
+
+                Nodes node = new Nodes();
+
+                node.pos = previousNodePos;
+
+                connections[connections.Count - 1].nextNode = node;
+
+                nodes.Add(node);
+                globalNodes.Add(node);
+
+                if (j == nodesnumber - 1)
+                {
+                    if (canEnd)
+                        node._type = Nodes.type.end;
+
+                    node.difficulty = 0;
+                }
+                else
+                {
+                    node._type = Nodes.type.normal;
+                    node.difficulty = UnityEngine.Random.Range(0, 4);
+
+                    Connections connection = new Connections();
+                    connection.hasLocked = UnityEngine.Random.Range(0, 2) == 0 ? false : true;
+
+                    connection.previousNode = node;
+
+                    connections.Add(connection);
+                }
+            }
         }
+
+        SetNodesConnections(connections, nodes);
 
         return nodes;
     }
@@ -188,7 +211,7 @@ public class GraphGeneration : MonoBehaviour
 
         connectionsSecondary.Add(startSecondaryConnection);
 
-        CreateDungeon(nodesNumber, connectionsSecondary, secondaryNodes, false);
+        CreateDungeon(nodesNumber, connectionsSecondary, secondaryNodes, false, false);
 
         return Tuple.Create(secondaryNodes, connectionsSecondary);
     }
@@ -218,25 +241,25 @@ public class GraphGeneration : MonoBehaviour
     #region Instance Prefab
     void InstanceRoom(List<Nodes> nodes, List<Connections> connections, bool secondaryPath, int value = 0)
     {
-        List<GameObject> rooms = new List<GameObject>();
+        List<GameObject> rooms = secondaryPath ? new List<GameObject>() : principalRooms;
 
         for (int i = 0; i < nodes.Count; i++)
         {
             GameObject room = Instantiate(prefabRoom, new Vector3(nodes[i].pos.x * 11, nodes[i].pos.y * 9), Quaternion.identity, transform);
+
             room.GetComponent<Room>().nodeRoom = nodes[i];
-            if (secondaryPath)
-                rooms.Add(room);
-            else
-                principalRooms.Add(room);
+            room.GetComponent<Room>().position = nodes[i].pos;
+
+            rooms.Add(room);
         }
 
-        foreach (var room in secondaryPath ? rooms : principalRooms)
+        foreach (var room in rooms)
         {
             foreach (var door in room.GetComponent<Room>().doors)
                 door.SetState(Door.STATE.WALL);
         }
 
-        InstanceDoor(secondaryPath ? rooms : principalRooms, connections, secondaryPath, value);
+        InstanceDoor(rooms, connections, secondaryPath, value);
     }
 
     void InstanceDoor(List<GameObject> rooms, List<Connections> connections, bool secondaryPath, int value)
@@ -251,6 +274,8 @@ public class GraphGeneration : MonoBehaviour
                 {
                     connections[i].previousNode.room = principalRooms[value].GetComponent<Room>();
                     connections[i].nextNode.room = rooms[i].GetComponent<Room>();
+
+                    Debug.LogError($"value : {value}");
                 }
                 else
                 {
@@ -264,37 +289,25 @@ public class GraphGeneration : MonoBehaviour
                 connections[i].nextNode.room = rooms[i + 1].GetComponent<Room>();
             }
 
-            if (connections[i].previousNode.pos.y == connections[i].nextNode.pos.y - 1.0f)
+            if (connections[i].previousNode.pos.y == (connections[i].nextNode.pos.y - 1.0f))
             {
-                if(connections[i].previousNode != null)
-                    connections[i].previousNode.room.upDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
-
-                if (connections[i].nextNode != null)
-                    connections[i].nextNode.room.downDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].previousNode.room.upDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].nextNode.room.downDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
             }
-            else if (connections[i].previousNode.pos.y == connections[i].nextNode.pos.y + 1.0f)
+            else if (connections[i].previousNode.pos.y == (connections[i].nextNode.pos.y + 1.0f))
             {
-                if (connections[i].previousNode != null)
-                    connections[i].previousNode.room.downDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
-
-                if (connections[i].nextNode != null)
-                    connections[i].nextNode.room.upDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].previousNode.room.downDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].nextNode.room.upDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
             }
-            else if (connections[i].previousNode.pos.x == connections[i].nextNode.pos.x + 1.0f)
+            else if (connections[i].previousNode.pos.x == (connections[i].nextNode.pos.x + 1.0f))
             {
-                if (connections[i].previousNode != null)
-                    connections[i].previousNode.room.leftDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
-
-                if (connections[i].nextNode != null)
-                    connections[i].nextNode.room.rightDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].previousNode.room.leftDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].nextNode.room.rightDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
             }
-            else if (connections[i].previousNode.pos.x == connections[i].nextNode.pos.x - 1.0f)
+            else if (connections[i].previousNode.pos.x == (connections[i].nextNode.pos.x - 1.0f))
             {
-                if (connections[i].previousNode != null)
-                    connections[i].previousNode.room.rightDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
-
-                if (connections[i].nextNode != null)
-                    connections[i].nextNode.room.leftDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].previousNode.room.rightDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
+                connections[i].nextNode.room.leftDoor.SetState(connections[i].hasLocked ? Door.STATE.CLOSED : Door.STATE.OPEN);
             }
         }
     }

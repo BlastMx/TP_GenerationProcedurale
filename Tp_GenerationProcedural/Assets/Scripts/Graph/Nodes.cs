@@ -11,7 +11,7 @@ public class Nodes
         difficulty = nodes.difficulty;
     }
 
-    public Vector2 pos;
+    public Vector2Int pos;
 
     public enum type
     {
