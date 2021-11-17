@@ -51,11 +51,12 @@ public class GraphGeneration : MonoBehaviour
         startConnections.previousNode = startNode;
 
         connections.Add(startConnections);
+        
     }
 
     List<Nodes> CreateDungeon(int nodesnumber, List<Connections> connections, List<Nodes> nodes, bool canEnd)
     {
-        for(int i = 0; i < nodesnumber; i++)
+        for(int i = 0; i < nodesnumber/2; i++)
         {
             bool canContinue = true;
             Vector2 previousNodePos;
@@ -92,7 +93,64 @@ public class GraphGeneration : MonoBehaviour
             nodes.Add(node);
             globalNodes.Add(node);
 
-            if (i == nodesnumber - 1)
+            node._type = Nodes.type.normal;
+            node.difficulty = Random.Range(0, 4);
+
+            Connections connection = new Connections();
+            connection.hasLocked = Random.Range(0, 2) == 0 ? false : true;
+
+            connection.previousNode = node;
+
+            connections.Add(connection);
+        }
+
+        List<Connections> rConnections = connections;
+        rConnections.Reverse();
+
+        for (int j = nodesnumber/2; j < nodesnumber; j++)
+        {
+            bool canContinue = true;
+            Vector2 previousNodePos;
+ 
+            do
+            {
+                if(j == nodesnumber / 2) {
+                    previousNodePos = nodes[nodes.Count - 1].pos;
+                    previousNodePos += Utils.OrientationToDir(GetOrientation());
+
+                    foreach (var _node in nodes)
+                    {
+                        if (_node.pos == previousNodePos)
+                        {
+                            canContinue = false;
+                            break;
+                        }
+                        else
+                            canContinue = true;
+                    }
+                }
+                else
+                {
+                    Vector2 symPos;
+                    symPos.x = rConnections[j - (nodesnumber / 2)].nextNode.pos.x - rConnections[j - (nodesnumber / 2)].previousNode.pos.x;
+                    symPos.y = rConnections[j - (nodesnumber / 2)].nextNode.pos.y - rConnections[j - (nodesnumber / 2)].previousNode.pos.y;
+
+                    previousNodePos = nodes[nodes.Count - 1].pos + symPos;
+
+                    canContinue = true;
+                }
+
+            } while (canContinue == false);
+
+            Nodes node = new Nodes();
+
+            node.pos = previousNodePos;
+
+            connections[connections.Count - 1].nextNode = node;
+
+            nodes.Add(node);
+
+            if (j == nodesnumber - 1)
             {
                 if(canEnd)
                     node._type = Nodes.type.end;
@@ -111,6 +169,7 @@ public class GraphGeneration : MonoBehaviour
 
                 connections.Add(connection);
             }
+        }
 
         }
 
