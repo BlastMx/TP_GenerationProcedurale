@@ -10,6 +10,16 @@ public class Room : MonoBehaviour {
 
 	private TilemapGroup _tilemapGroup;
 
+	public Door upDoor;
+	public Door downDoor;
+	public Door leftDoor;
+	public Door rightDoor;
+
+	public List<Door> doors = new List<Door>();
+
+	[HideInInspector]
+	public Nodes nodeRoom;
+
 	public static List<Room> allRooms = new List<Room>();
 
     void Awake()

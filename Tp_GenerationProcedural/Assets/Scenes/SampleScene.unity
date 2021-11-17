@@ -570,7 +570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf1c296cf1efa940a99a596bbe9a4e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabRoom: {fileID: 3598839253906037134, guid: 3eaae30cd86340443a478bae827a756e, type: 3}
+  prefabRoom: {fileID: 430167087599036338, guid: 3da965d4acd3aa14b83b1c382afc0361, type: 3}
+  prefabDoorOpen: {fileID: 6144991255345215292, guid: e220ae9ccd75bd04fa295d970d7c2202, type: 3}
+  prefabDoorClosed: {fileID: 3508380386316081258, guid: 94bbea04c40d9c144bedd2c8c4df140e, type: 3}
 --- !u!1001 &3061304261915543687
 PrefabInstance:
   m_ObjectHideFlags: 0
