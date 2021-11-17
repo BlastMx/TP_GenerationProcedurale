@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Connections : MonoBehaviour
+public class Connections
 {
     public bool hasLocked = false;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Nodes : MonoBehaviour
+public class Nodes
 {
     public void InitNode(Nodes nodes)
     {
@@ -17,10 +17,13 @@ public class Nodes : MonoBehaviour
     {
         start,
         normal,
+        key,
         end
     }
 
     public type _type;
 
     public int difficulty = 0;
+
+    public Room room;
 }
