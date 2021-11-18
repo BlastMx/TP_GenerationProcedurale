@@ -82,6 +82,9 @@ public class GraphGeneration : MonoBehaviour
     {
         for(int i = 0; i < nodes.Count - 1; i++)
         {
+            Debug.Log(connections.Count);
+            Debug.Log(nodes.Count);
+
             connections[i].previousNode = nodes[i];
             connections[i].nextNode = nodes[i + 1];
         }
@@ -198,30 +201,39 @@ public class GraphGeneration : MonoBehaviour
                 nodes.Add(node);
                 globalNodes.Add(node);
 
-                if (j == nodesnumber - 1)
-                {
-                    if (canEnd)
-                        node._type = Nodes.type.end;
+                node._type = Nodes.type.normal;
+                node.difficulty = UnityEngine.Random.Range(0, 4);
 
-                    node.difficulty = 0;
-                }
-                else
-                {
-                    node._type = Nodes.type.normal;
-                    node.difficulty = UnityEngine.Random.Range(0, 4);
+                Connections connection = new Connections();
+                connection.hasLocked = false;
+                
+                connection.previousNode = node;
 
-                    Connections connection = new Connections();
-                    connection.hasLocked = false;
-
-                    connection.previousNode = node;
-
-                    connections.Add(connection);
-                }
+                connections.Add(connection);
+                
             }
+            
+        Vector2Int previousNodePosEnd = Vector2Int.zero;
+        previousNodePosEnd.x = nodes[1].pos.x;
+        previousNodePosEnd.y = nodes[1].pos.y;
+
+        Nodes nodeEnd = new Nodes();
+
+        nodeEnd.pos = nodes[nodes.Count - 1].pos + previousNodePosEnd;
+
+        connections[connections.Count - 1].nextNode = nodeEnd;
+
+        nodes.Add(nodeEnd);
+        globalNodes.Add(nodeEnd);
+
+        if (canEnd)
+            nodeEnd._type = Nodes.type.end;
+
+        nodeEnd.difficulty = 0;
 
             SetNodesConnections(connections, nodes);
         }
-
+        
         return nodes;
     }
 
