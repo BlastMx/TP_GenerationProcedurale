@@ -21,6 +21,8 @@ public class GraphGeneration : MonoBehaviour
 
         InstanceRoom(CreateDungeon(10, connections, nodes, true, true), connections, false);
 
+        //CreateHidden();
+
         InstanceSecondaryPath(5);
         InstanceSecondaryPath(2);
     }
@@ -232,6 +234,62 @@ public class GraphGeneration : MonoBehaviour
         }
         
         return nodes;
+    }
+
+    void CreateHidden()
+    {
+        int value = UnityEngine.Random.Range(1, nodes.Count / 2);
+        var roomShown = SecondaryPath(1, nodes[value]);
+
+        if (connections[value].previousNode.pos.y == (connections[value].nextNode.pos.y - 1.0f))
+        {
+            connections[value].previousNode.room.upDoor.SetState(Door.STATE.OPEN);
+            connections[value].nextNode.room.downDoor.SetState(Door.STATE.OPEN);
+        }
+        else if (connections[value].previousNode.pos.y == (connections[value].nextNode.pos.y + 1.0f))
+        {
+            connections[value].previousNode.room.downDoor.SetState(Door.STATE.OPEN);
+            connections[value].nextNode.room.upDoor.SetState(Door.STATE.OPEN);
+        }
+        else if (connections[value].previousNode.pos.x == (connections[value].nextNode.pos.x + 1.0f))
+        {
+            connections[value].previousNode.room.leftDoor.SetState(Door.STATE.OPEN);
+            connections[value].nextNode.room.rightDoor.SetState(Door.STATE.OPEN);
+        }
+        else if (connections[value].previousNode.pos.x == (connections[value].nextNode.pos.x - 1.0f))
+        {
+            connections[value].previousNode.room.rightDoor.SetState(Door.STATE.OPEN);
+            connections[value].nextNode.room.leftDoor.SetState(Door.STATE.OPEN);
+        }
+
+        int hiddenValue = nodes.Count-value-1;
+        InstanceRoom(roomShown.Item1, roomShown.Item2, true, value);
+
+        var roomHidden = SecondaryPath(1, nodes[nodes.Count - hiddenValue]);
+
+        if (connections[hiddenValue].previousNode.pos.y == (connections[hiddenValue].nextNode.pos.y - 1.0f))
+        {
+            connections[hiddenValue].previousNode.room.upDoor.SetState(Door.STATE.SECRET);
+            connections[hiddenValue].nextNode.room.downDoor.SetState(Door.STATE.SECRET);
+        }
+        else if (connections[hiddenValue].previousNode.pos.y == (connections[hiddenValue].nextNode.pos.y + 1.0f))
+        {
+            connections[hiddenValue].previousNode.room.downDoor.SetState(Door.STATE.SECRET);
+            connections[hiddenValue].nextNode.room.upDoor.SetState(Door.STATE.SECRET);
+        }
+        else if (connections[hiddenValue].previousNode.pos.x == (connections[hiddenValue].nextNode.pos.x + 1.0f))
+        {
+            connections[hiddenValue].previousNode.room.leftDoor.SetState(Door.STATE.SECRET);
+            connections[hiddenValue].nextNode.room.rightDoor.SetState(Door.STATE.SECRET);
+        }
+        else if (connections[hiddenValue].previousNode.pos.x == (connections[hiddenValue].nextNode.pos.x - 1.0f))
+        {
+            connections[hiddenValue].previousNode.room.rightDoor.SetState(Door.STATE.SECRET);
+            connections[hiddenValue].nextNode.room.leftDoor.SetState(Door.STATE.SECRET);
+        }
+
+        InstanceRoom(roomHidden.Item1, roomHidden.Item2, true, hiddenValue);
+
     }
 
     public Tuple<List<Nodes>, List<Connections>> SecondaryPath(int nodesNumber, Nodes startNodes)
