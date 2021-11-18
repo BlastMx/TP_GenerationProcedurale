@@ -27,6 +27,9 @@ public class GraphGeneration : MonoBehaviour
     [SerializeField]
     private Color SecondaryWayColor;
 
+    [SerializeField]
+    private RoomsData data;
+
     // Start is called before the first frame update
     void Start()
     {
