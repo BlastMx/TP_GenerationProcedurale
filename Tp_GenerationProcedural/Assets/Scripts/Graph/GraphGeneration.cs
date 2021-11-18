@@ -21,16 +21,40 @@ public class GraphGeneration : MonoBehaviour
 
         InstanceRoom(CreateDungeon(10, connections, nodes, true, true), connections, false);
 
-        //InstanceSecondaryPath(5);
-        //InstanceSecondaryPath(2);
+        InstanceSecondaryPath(5);
+        InstanceSecondaryPath(2);
     }
 
     #region Abstract graph
 
     void InstanceSecondaryPath(int nodesNumber)
     {
-        var value = UnityEngine.Random.Range(0, nodes.Count - 1);
+        var value = UnityEngine.Random.Range(1, nodes.Count - 1);
+
         var secondaryPath = SecondaryPath(nodesNumber, nodes[value]);
+
+        connections[value].hasLocked = true;
+        
+        if (connections[value].previousNode.pos.y == (connections[value].nextNode.pos.y - 1.0f))
+        {
+            connections[value].previousNode.room.upDoor.SetState(Door.STATE.CLOSED);
+            connections[value].nextNode.room.downDoor.SetState(Door.STATE.CLOSED);
+        }
+        else if (connections[value].previousNode.pos.y == (connections[value].nextNode.pos.y + 1.0f))
+        {
+            connections[value].previousNode.room.downDoor.SetState(Door.STATE.CLOSED);
+            connections[value].nextNode.room.upDoor.SetState(Door.STATE.CLOSED);
+        }
+        else if (connections[value].previousNode.pos.x == (connections[value].nextNode.pos.x + 1.0f))
+        {
+            connections[value].previousNode.room.leftDoor.SetState(Door.STATE.CLOSED);
+            connections[value].nextNode.room.rightDoor.SetState(Door.STATE.CLOSED);
+        }
+        else if (connections[value].previousNode.pos.x == (connections[value].nextNode.pos.x - 1.0f))
+        {
+            connections[value].previousNode.room.rightDoor.SetState(Door.STATE.CLOSED);
+            connections[value].nextNode.room.leftDoor.SetState(Door.STATE.CLOSED);
+        }
 
         InstanceRoom(secondaryPath.Item1, secondaryPath.Item2, true, value);
     }
@@ -58,9 +82,6 @@ public class GraphGeneration : MonoBehaviour
     {
         for(int i = 0; i < nodes.Count - 1; i++)
         {
-            Debug.Log(connections.Count);
-            Debug.Log(nodes.Count);
-
             connections[i].previousNode = nodes[i];
             connections[i].nextNode = nodes[i + 1];
         }
@@ -111,13 +132,15 @@ public class GraphGeneration : MonoBehaviour
             {
                 if (canEnd)
                     node._type = Nodes.type.end;
+                else
+                    node._type = Nodes.type.key;
 
                 node.difficulty = 0;
             }
             else
             {
                 Connections connection = new Connections();
-                connection.hasLocked = UnityEngine.Random.Range(0, 2) == 0 ? false : true;
+                connection.hasLocked = false;
 
                 connection.previousNode = node;
 
@@ -179,35 +202,35 @@ public class GraphGeneration : MonoBehaviour
                 node.difficulty = UnityEngine.Random.Range(0, 4);
 
                 Connections connection = new Connections();
-                connection.hasLocked = UnityEngine.Random.Range(0, 2) == 0 ? false : true;
-
+                connection.hasLocked = false;
+                
                 connection.previousNode = node;
 
                 connections.Add(connection);
                 
             }
-        }
+            
+            Vector2Int previousNodePosEnd = Vector2Int.zero;
+            previousNodePosEnd.x = nodes[1].pos.x;
+            previousNodePosEnd.y = nodes[1].pos.y;
 
-        Vector2Int previousNodePosEnd = Vector2Int.zero;
-        previousNodePosEnd.x = nodes[1].pos.x;
-        previousNodePosEnd.y = nodes[1].pos.y;
+            Nodes nodeEnd = new Nodes();
 
-        Nodes nodeEnd = new Nodes();
+            nodeEnd.pos = nodes[nodes.Count - 1].pos + previousNodePosEnd;
 
-        nodeEnd.pos = nodes[nodes.Count - 1].pos + previousNodePosEnd;
+            connections[connections.Count - 1].nextNode = nodeEnd;
 
-        connections[connections.Count - 1].nextNode = nodeEnd;
+            nodes.Add(nodeEnd);
+            globalNodes.Add(nodeEnd);
 
-        nodes.Add(nodeEnd);
-        globalNodes.Add(nodeEnd);
-
-        if (canEnd)
+            if (canEnd)
             nodeEnd._type = Nodes.type.end;
 
-        nodeEnd.difficulty = 0;
+            nodeEnd.difficulty = 0;
 
-        SetNodesConnections(connections, nodes);
-
+            SetNodesConnections(connections, nodes);
+        }
+        
         return nodes;
     }
 
@@ -276,8 +299,6 @@ public class GraphGeneration : MonoBehaviour
 
     void InstanceDoor(List<GameObject> rooms, List<Connections> connections, bool secondaryPath, int value)
     {
-        //Debug.LogError($"rooms : {rooms.Count}, connections : {connections.Count}");
-
         for(int i = 0; i < connections.Count; i++)
         {
             if(secondaryPath)
@@ -286,8 +307,6 @@ public class GraphGeneration : MonoBehaviour
                 {
                     connections[i].previousNode.room = principalRooms[value].GetComponent<Room>();
                     connections[i].nextNode.room = rooms[i].GetComponent<Room>();
-
-                    Debug.LogError($"value : {value}");
                 }
                 else
                 {
