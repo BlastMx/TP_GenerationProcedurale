@@ -554,6 +554,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4840953954044063645, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4840953954044063647, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_Points.Array.size
       value: 5
@@ -591,12 +595,16 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4840953954951390765, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
+      propertyPath: m_isVisible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840953954951390765, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_parentTilemapGroup
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4840953955217245728, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_Name
-      value: Room3 S
+      value: Room3 S Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4840953955217245730, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_selectedIndex
@@ -669,6 +677,10 @@ PrefabInstance:
     - target: {fileID: 4840953955645972351, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_tileDataList.Array.data[363]
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4840953955645972351, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
+      propertyPath: m_tileDataList.Array.data[365]
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4840953955645972351, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_tileDataList.Array.data[367]
@@ -826,7 +838,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -950,7 +962,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,7 +1086,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1694,7 +1706,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4766563019477658464, guid: 9da7b780c096a1f42b3578150579f43f, type: 3}
       propertyPath: m_LocalPosition.x
