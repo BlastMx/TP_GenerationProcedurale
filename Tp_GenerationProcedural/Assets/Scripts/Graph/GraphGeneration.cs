@@ -82,9 +82,6 @@ public class GraphGeneration : MonoBehaviour
     {
         for(int i = 0; i < nodes.Count - 1; i++)
         {
-            Debug.Log(connections.Count);
-            Debug.Log(nodes.Count);
-
             connections[i].previousNode = nodes[i];
             connections[i].nextNode = nodes[i + 1];
         }
@@ -213,23 +210,23 @@ public class GraphGeneration : MonoBehaviour
                 
             }
             
-        Vector2Int previousNodePosEnd = Vector2Int.zero;
-        previousNodePosEnd.x = nodes[1].pos.x;
-        previousNodePosEnd.y = nodes[1].pos.y;
+            Vector2Int previousNodePosEnd = Vector2Int.zero;
+            previousNodePosEnd.x = nodes[1].pos.x;
+            previousNodePosEnd.y = nodes[1].pos.y;
 
-        Nodes nodeEnd = new Nodes();
+            Nodes nodeEnd = new Nodes();
 
-        nodeEnd.pos = nodes[nodes.Count - 1].pos + previousNodePosEnd;
+            nodeEnd.pos = nodes[nodes.Count - 1].pos + previousNodePosEnd;
 
-        connections[connections.Count - 1].nextNode = nodeEnd;
+            connections[connections.Count - 1].nextNode = nodeEnd;
 
-        nodes.Add(nodeEnd);
-        globalNodes.Add(nodeEnd);
+            nodes.Add(nodeEnd);
+            globalNodes.Add(nodeEnd);
 
-        if (canEnd)
+            if (canEnd)
             nodeEnd._type = Nodes.type.end;
 
-        nodeEnd.difficulty = 0;
+            nodeEnd.difficulty = 0;
 
             SetNodesConnections(connections, nodes);
         }
