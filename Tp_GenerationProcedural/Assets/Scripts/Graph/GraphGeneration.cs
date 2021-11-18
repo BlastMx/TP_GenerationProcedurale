@@ -39,7 +39,7 @@ public class GraphGeneration : MonoBehaviour
 
         //CreateHidden();
 
-        InstanceSecondaryPath(5);
+        //InstanceSecondaryPath(5);
         InstanceSecondaryPath(2);
     }
 
@@ -446,6 +446,7 @@ public class GraphGeneration : MonoBehaviour
             }
         }
     }
+
     GameObject SelectRoom(int difficulty = 0, bool hasKey = false, RoomParameters.State state = RoomParameters.State.NORMAL)
     {
         GameObject selected;

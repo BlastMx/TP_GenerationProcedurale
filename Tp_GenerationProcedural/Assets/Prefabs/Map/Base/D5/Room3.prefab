@@ -1318,13 +1318,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartRoom: 1
+  isStartRoom: 0
   position: {x: 0, y: 0}
-  upDoor: {fileID: 0}
-  downDoor: {fileID: 0}
-  leftDoor: {fileID: 0}
-  rightDoor: {fileID: 0}
-  doors: []
+  upDoor: {fileID: 98376250482445864}
+  downDoor: {fileID: 2782023130924162165}
+  leftDoor: {fileID: 8082091495452756948}
+  rightDoor: {fileID: 3901466316524541010}
+  doors:
+  - {fileID: 98376250482445864}
+  - {fileID: 3901466316524541010}
+  - {fileID: 8082091495452756948}
+  - {fileID: 2782023130924162165}
 --- !u!50 &1649190687783119926
 Rigidbody2D:
   serializedVersion: 4

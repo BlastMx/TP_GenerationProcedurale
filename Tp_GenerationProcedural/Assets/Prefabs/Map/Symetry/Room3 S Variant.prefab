@@ -614,6 +614,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room3 S Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4840953955217245729, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
+      propertyPath: isStartRoom
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4840953955217245730, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
       propertyPath: m_selectedIndex
       value: 1
