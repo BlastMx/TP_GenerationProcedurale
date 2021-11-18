@@ -324,5 +324,15 @@ public class Player : MonoBehaviour {
             Attack attack = collision.gameObject.GetComponent<Attack>();
             ApplyHit(attack);
         }
+        else if(collision.CompareTag("ChangeEnemy"))
+        {
+            foreach (var enemy in FindObjectsOfType<Enemy>())
+                enemy.attackPrefab = enemy.attackNormal;
+        }
+        else if (collision.CompareTag("ChangeEnemyShoot"))
+        {
+            foreach(var enemy in FindObjectsOfType<Enemy>())
+                enemy.attackPrefab = enemy.attackShoot;
+        }
     }
 }

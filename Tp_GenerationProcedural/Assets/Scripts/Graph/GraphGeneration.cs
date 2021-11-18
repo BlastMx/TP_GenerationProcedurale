@@ -1,7 +1,9 @@
+using CreativeSpore.SuperTilemapEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GraphGeneration : MonoBehaviour
 {
@@ -13,6 +15,17 @@ public class GraphGeneration : MonoBehaviour
 
     [SerializeField]
     private GameObject prefabRoom;
+    [SerializeField]
+    private GameObject triggerChangeEnemy;
+    [SerializeField]
+    private GameObject triggerChangeEnemyShoot;
+
+    [SerializeField]
+    private Color firstLevelPartColor;
+    [SerializeField]
+    private Color SecondLevelPartColor;
+    [SerializeField]
+    private Color SecondaryWayColor;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +34,8 @@ public class GraphGeneration : MonoBehaviour
 
         InstanceRoom(CreateDungeon(10, connections, nodes, true, true), connections, false);
 
-        InstanceSecondaryPath(5);
-        InstanceSecondaryPath(2);
+        /*InstanceSecondaryPath(5);
+        InstanceSecondaryPath(2);*/
     }
 
     #region Abstract graph
@@ -292,6 +305,21 @@ public class GraphGeneration : MonoBehaviour
         {
             foreach (var door in room.GetComponent<Room>().doors)
                 door.SetState(Door.STATE.WALL);
+
+            if (secondaryPath)
+                room.transform.GetChild(0).GetComponent<STETilemap>().TintColor = SecondaryWayColor;
+            else
+            {
+                room.transform.GetChild(0).GetComponent<STETilemap>().TintColor = SecondLevelPartColor;
+                for(int i = 0; i < nodes.Count/2; i++)
+                    rooms[i].transform.GetChild(0).GetComponent<STETilemap>().TintColor = firstLevelPartColor;
+            }
+        }
+
+        if (!secondaryPath)
+        {
+            Instantiate(triggerChangeEnemyShoot, rooms[nodes.Count / 2].transform);
+            Instantiate(triggerChangeEnemy, rooms[(nodes.Count / 2) - 1].transform);
         }
 
         InstanceDoor(rooms, connections, secondaryPath, value);

@@ -571,8 +571,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabRoom: {fileID: 430167087599036338, guid: 3da965d4acd3aa14b83b1c382afc0361, type: 3}
-  prefabDoorOpen: {fileID: 6144991255345215292, guid: e220ae9ccd75bd04fa295d970d7c2202, type: 3}
-  prefabDoorClosed: {fileID: 3508380386316081258, guid: 94bbea04c40d9c144bedd2c8c4df140e, type: 3}
+  triggerChangeEnemy: {fileID: 2499039772326346466, guid: 4f972d72c37bdce4ea52e721adecc2be, type: 3}
+  triggerChangeEnemyShoot: {fileID: 2499039772326346466, guid: d992321ceaf789145838469c9b831a7c, type: 3}
+  firstLevelPartColor: {r: 0.48162156, g: 0.7189169, b: 0.745283, a: 1}
+  SecondLevelPartColor: {r: 0.74509805, g: 0.4849257, b: 0.48235294, a: 1}
+  SecondaryWayColor: {r: 0.70735395, g: 0.48235294, b: 0.74509805, a: 1}
 --- !u!1001 &3061304261915543687
 PrefabInstance:
   m_ObjectHideFlags: 0
