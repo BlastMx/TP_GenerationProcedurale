@@ -13,6 +13,7 @@ public class GraphGeneration : MonoBehaviour
     List<Connections> connections = new List<Connections>();
     //List<Connections> secondarysConnections = new List<Connections>();
 
+    [Header("Prefabs")]
     [SerializeField]
     private GameObject prefabRoom;
     [SerializeField]
@@ -20,6 +21,7 @@ public class GraphGeneration : MonoBehaviour
     [SerializeField]
     private GameObject triggerChangeEnemyShoot;
 
+    [Header("Colors")]
     [SerializeField]
     private Color firstLevelPartColor;
     [SerializeField]
@@ -27,15 +29,24 @@ public class GraphGeneration : MonoBehaviour
     [SerializeField]
     private Color SecondaryWayColor;
 
+    [Header("Rooms data")]
     [SerializeField]
     private RoomsData data;
+
+    [Header("Increase difficulty")]
+    [SerializeField]
+    private int stepIncreaseDifficulty = 0;
+
+    [Header("Dungeon")]
+    [SerializeField]
+    private int numberRooms = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         CreateStartNode();
 
-        InstanceRoom(CreateDungeon(10, connections, nodes, true, true), connections, false);
+        InstanceRoom(CreateDungeon(numberRooms, connections, nodes, true, true), connections, false);
 
         //CreateHidden();
 
@@ -96,13 +107,34 @@ public class GraphGeneration : MonoBehaviour
         
     }
 
-    void SetNodesConnections(List<Connections> connections, List<Nodes> nodes)
+    void SetNodesConnections(List<Connections> connections, List<Nodes> nodes, int nextDifficultyStep)
     {
+        int value = 0;
+
         for(int i = 0; i < nodes.Count - 1; i++)
         {
             connections[i].previousNode = nodes[i];
             connections[i].nextNode = nodes[i + 1];
+
+            nodes[i].difficulty = value;
+            Debug.LogError(nodes[i] + " : " + nodes[i].difficulty);
+
+            if (IsMultipleOf(i, nextDifficultyStep))
+                value++;
         }
+
+        nodes[nodes.Count - 1].difficulty = 0;
+    }
+
+    bool IsMultipleOf(int value, int multiplacator)
+    {
+        while (value > 0)
+            value -= multiplacator;
+
+        if (value == 0)
+            return true;
+
+        return false;
     }
 
     List<Nodes> CreateDungeon(int nodesnumber, List<Connections> connections, List<Nodes> nodes, bool canEnd, bool asymetric)
@@ -144,7 +176,7 @@ public class GraphGeneration : MonoBehaviour
             globalNodes.Add(node);
 
             node._type = Nodes.type.normal;
-            node.difficulty = UnityEngine.Random.Range(0, 4);
+            node.difficulty = 1;
 
             if (i == nodesnumber - 1)
             {
@@ -217,7 +249,6 @@ public class GraphGeneration : MonoBehaviour
                 globalNodes.Add(node);
 
                 node._type = Nodes.type.normal;
-                node.difficulty = UnityEngine.Random.Range(0, 4);
 
                 Connections connection = new Connections();
                 connection.hasLocked = false;
@@ -246,7 +277,7 @@ public class GraphGeneration : MonoBehaviour
 
             nodeEnd.difficulty = 0;
 
-            SetNodesConnections(connections, nodes);
+            SetNodesConnections(connections, nodes, stepIncreaseDifficulty);
         }
         
         return nodes;
@@ -358,15 +389,15 @@ public class GraphGeneration : MonoBehaviour
 
             if (!secondaryPath)
             {
-                if (i == 0) prefabSelected = SelectRoom(1, false, RoomParameters.State.START);
-                else if (i == nodes.Count - 1) prefabSelected = SelectRoom(1, false, RoomParameters.State.END);
-                else if (i < nodes.Count / 2) prefabSelected = SelectRoom(1, false, RoomParameters.State.NORMAL);
-                else prefabSelected = SelectRoom(1, false, RoomParameters.State.INVERTED);
+                if (i == 0) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.START);
+                else if (i == nodes.Count - 1) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.END);
+                else if (i < nodes.Count / 2) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.NORMAL);
+                else prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.INVERTED);
             }
             else
             {
-                if(i == nodes.Count- 1) prefabSelected = SelectRoom(1, true, RoomParameters.State.NORMAL);
-                else prefabSelected = SelectRoom(1, false, RoomParameters.State.NORMAL);
+                if(i == nodes.Count- 1) prefabSelected = SelectRoom(nodes[i].difficulty, true, RoomParameters.State.NORMAL);
+                else prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.NORMAL);
             }
 
             GameObject room = Instantiate(prefabSelected, new Vector3(nodes[i].pos.x * 11, nodes[i].pos.y * 9), Quaternion.identity, transform);
@@ -454,12 +485,13 @@ public class GraphGeneration : MonoBehaviour
 
         foreach (RoomParameters param in data.rooms)
         {
-            if (param.myState == state) 
+            if (param.myState == state 
+                && param.difficulty == difficulty
+                    && param.hasKey == hasKey) 
                 Selection.Add(param.GetComponent<Room>().gameObject);
-
         }
 
-        if (difficulty > 0)
+        /*if (difficulty > 0)
         {
             for(int i = Selection.Count- 1; i >= 0; i--)
             {
@@ -476,7 +508,7 @@ public class GraphGeneration : MonoBehaviour
                 RoomParameters param = Selection[i].GetComponent<RoomParameters>();
                 if (!param.hasKey) Selection.Remove(Selection[i]);
             }
-        }
+        }*/
 
         selected = Selection[UnityEngine.Random.Range(0, Selection.Count)];
 

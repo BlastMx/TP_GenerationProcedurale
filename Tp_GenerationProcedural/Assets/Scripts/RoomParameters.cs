@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class RoomParameters: MonoBehaviour
 {
-    [Range(1, 6)] public int difficulty;
+    [Range(0, 6)] public int difficulty;
     public bool hasKey;
 
     public enum State {

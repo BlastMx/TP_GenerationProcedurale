@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
       propertyPath: difficulty
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2697675070032975507, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
       propertyPath: m_Points.Array.size

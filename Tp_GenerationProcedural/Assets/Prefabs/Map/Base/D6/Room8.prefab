@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 1649190687783119926}
   - component: {fileID: -6235953269866067142}
   m_Layer: 0
-  m_Name: Room3
+  m_Name: Room8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611e91c02d3e0cf4ab321541ee2c376b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 5
+  difficulty: 6
   hasKey: 0
   myState: 2
 --- !u!1 &2944320293829250617

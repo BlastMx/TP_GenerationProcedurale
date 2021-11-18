@@ -17,6 +17,7 @@ public class Nodes
     {
         start,
         normal,
+        inverted,
         key,
         end
     }
