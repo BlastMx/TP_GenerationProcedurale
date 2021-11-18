@@ -1259,6 +1259,7 @@ GameObject:
   - component: {fileID: 1649190687783119920}
   - component: {fileID: 1649190687783119923}
   - component: {fileID: 1649190687783119926}
+  - component: {fileID: -6235953269866067142}
   m_Layer: 0
   m_Name: Room3
   m_TagString: Untagged
@@ -1345,6 +1346,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-6235953269866067142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649190687783119922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611e91c02d3e0cf4ab321541ee2c376b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficulty: 1
+  hasKey: 0
+  myState: 2
 --- !u!1 &2944320293829250617
 GameObject:
   m_ObjectHideFlags: 0

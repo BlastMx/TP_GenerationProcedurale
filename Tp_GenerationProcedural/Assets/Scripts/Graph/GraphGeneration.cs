@@ -354,7 +354,22 @@ public class GraphGeneration : MonoBehaviour
 
         for (int i = 0; i < nodes.Count; i++)
         {
-            GameObject room = Instantiate(prefabRoom, new Vector3(nodes[i].pos.x * 11, nodes[i].pos.y * 9), Quaternion.identity, transform);
+            GameObject prefabSelected = prefabRoom;
+
+            if (!secondaryPath)
+            {
+                if (i == 0) prefabSelected = SelectRoom(1, false, RoomParameters.State.START);
+                else if (i == nodes.Count - 1) prefabSelected = SelectRoom(1, false, RoomParameters.State.END);
+                else if (i < nodes.Count / 2) prefabSelected = SelectRoom(1, false, RoomParameters.State.NORMAL);
+                else prefabSelected = SelectRoom(1, false, RoomParameters.State.INVERTED);
+            }
+            else
+            {
+                if(i == nodes.Count- 1) prefabSelected = SelectRoom(1, true, RoomParameters.State.NORMAL);
+                else prefabSelected = SelectRoom(1, false, RoomParameters.State.NORMAL);
+            }
+
+            GameObject room = Instantiate(prefabSelected, new Vector3(nodes[i].pos.x * 11, nodes[i].pos.y * 9), Quaternion.identity, transform);
 
             room.GetComponent<Room>().nodeRoom = nodes[i];
             room.GetComponent<Room>().position = nodes[i].pos;
@@ -431,6 +446,46 @@ public class GraphGeneration : MonoBehaviour
             }
         }
     }
+    GameObject SelectRoom(int difficulty = 0, bool hasKey = false, RoomParameters.State state = RoomParameters.State.NORMAL)
+    {
+        GameObject selected;
+        List<GameObject> Selection = new List<GameObject>();
+
+        foreach (RoomParameters param in data.rooms)
+        {
+            if (param.myState == state) 
+                Selection.Add(param.GetComponent<Room>().gameObject);
+
+        }
+
+        if (difficulty > 0)
+        {
+            for(int i = Selection.Count- 1; i >= 0; i--)
+            {
+                RoomParameters param = Selection[i].GetComponent<RoomParameters>();
+                if (param.difficulty != difficulty) Selection.Remove(Selection[i]);
+
+            }        
+        }
+
+        if (hasKey)
+        {
+            for (int i = Selection.Count - 1; i >= 0; i--)
+            {
+                RoomParameters param = Selection[i].GetComponent<RoomParameters>();
+                if (!param.hasKey) Selection.Remove(Selection[i]);
+            }
+        }
+
+        selected = Selection[UnityEngine.Random.Range(0, Selection.Count)];
+
+        Debug.Log(selected);
+        
+
+        return selected;
+    }
 
     #endregion Instance Prefab
 }
+
+ 

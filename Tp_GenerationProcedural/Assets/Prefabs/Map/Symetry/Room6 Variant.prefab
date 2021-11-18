@@ -249,6 +249,14 @@ PrefabInstance:
       propertyPath: m_Points.Array.data[6].y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+      propertyPath: myState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+      propertyPath: difficulty
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2697675070032975507, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
       propertyPath: m_Points.Array.size
       value: 7
@@ -897,6 +905,7 @@ PrefabInstance:
     - {fileID: 6715753508174736116, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
     - {fileID: 6161758755367909311, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
     - {fileID: 1136852567666722828, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+    - {fileID: -777803953023397917, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
 --- !u!4 &4791296783592972184 stripped
 Transform:

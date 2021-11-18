@@ -576,6 +576,7 @@ MonoBehaviour:
   firstLevelPartColor: {r: 0.48162156, g: 0.7189169, b: 0.745283, a: 1}
   SecondLevelPartColor: {r: 0.74509805, g: 0.4849257, b: 0.48235294, a: 1}
   SecondaryWayColor: {r: 0.70735395, g: 0.48235294, b: 0.74509805, a: 1}
+  data: {fileID: 11400000, guid: c70cc91449bae0a4f8cd46a08f2ecc4a, type: 2}
 --- !u!1001 &3061304261915543687
 PrefabInstance:
   m_ObjectHideFlags: 0

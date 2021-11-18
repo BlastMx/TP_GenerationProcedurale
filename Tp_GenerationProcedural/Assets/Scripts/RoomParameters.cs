@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class RoomParameters
+public class RoomParameters: MonoBehaviour
 {
-    [Range(0, 3)] public int difficulty;
+    [Range(1, 6)] public int difficulty;
     public bool hasKey;
 
     public enum State {

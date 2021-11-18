@@ -1174,6 +1174,14 @@ PrefabInstance:
       propertyPath: m_Points.Array.data[6].y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+      propertyPath: myState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+      propertyPath: difficulty
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2697675070032975507, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
       propertyPath: m_Points.Array.size
       value: 7
@@ -1826,12 +1834,8 @@ PrefabInstance:
     - {fileID: 6715753508174736116, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
     - {fileID: 6161758755367909311, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
     - {fileID: 1136852567666722828, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+    - {fileID: -777803953023397917, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
---- !u!4 &3229873173510059572 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6916681099887137605, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
-  m_PrefabInstance: {fileID: 8299619926332614001}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3229873171758723762 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6916681098150877123, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
@@ -1843,6 +1847,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dec3ca0fe88506448df84e8bf55b2dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3229873173510059572 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6916681099887137605, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+  m_PrefabInstance: {fileID: 8299619926332614001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3229873171758723763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6916681098150877122, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}

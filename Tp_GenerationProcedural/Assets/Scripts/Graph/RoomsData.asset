@@ -12,3 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5827f46e9fd8b9a4abc7794e97d69a80, type: 3}
   m_Name: RoomsData
   m_EditorClassIdentifier: 
+  rooms:
+  - {fileID: 63137966644236372, guid: 1a5d829cf240e4cf2bb5849276acbf8b, type: 3}
+  - {fileID: 2439791521662182651, guid: b5f4180fc958541a191cc05a596a55d5, type: 3}
+  - {fileID: -6235953269866067142, guid: 95904f0ad53994e859dbe8e605f09516, type: 3}
+  - {fileID: -361618767606584029, guid: 4ddb595db015645f6abbe66d05fef1f2, type: 3}
+  - {fileID: -8938585185842031665, guid: 40804470a4f884a88b7ff09de0479c4d, type: 3}
+  - {fileID: -2709218995399587217, guid: 954720880e6f842c28c2ea8a214196c9, type: 3}
+  - {fileID: 396777510502264874, guid: e4143659b27844914a2fa53d9eee46d0, type: 3}
+  - {fileID: 3019952560685060252, guid: 8b6bcee9d85584e9b95c7a4be4a8bca6, type: 3}
+  - {fileID: -7372428636140024188, guid: 93ff736117ed5430fb225eb2712e1b51, type: 3}
+  - {fileID: 1951324190992947389, guid: 7f79a1a05b22b4df3a68496d0b094c4d, type: 3}
+  - {fileID: 3311879346741103592, guid: 8a60ff5b9fab84afab90e93b03a23180, type: 3}
+  - {fileID: 2031746357829805375, guid: cdbb79f606b7449908a9c929a09a66db, type: 3}
+  - {fileID: 121827358793148898, guid: f6f39e366302b428eaf2a4af364659e6, type: 3}
+  - {fileID: 8006303742841094222, guid: 59428e3f26c8a45eebe92bce6c9fdb54, type: 3}
+  value: 0
