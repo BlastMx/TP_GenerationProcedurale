@@ -63,6 +63,8 @@ public class Enemy : MonoBehaviour
 
     // Attack attributes
     [Header("Attack")]
+    public GameObject attackNormal = null;
+    public GameObject attackShoot = null;
     public GameObject attackPrefab = null;
     public GameObject attackSpawnPoint = null;
 	public float attackWarmUp = 0.5f;
