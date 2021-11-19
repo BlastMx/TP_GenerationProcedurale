@@ -51,7 +51,7 @@ public class GraphGeneration : MonoBehaviour
         //CreateHidden();
 
         //InstanceSecondaryPath(5);
-        InstanceSecondaryPath(2);
+        //InstanceSecondaryPath(2);
     }
 
     #region Abstract graph
@@ -391,8 +391,7 @@ public class GraphGeneration : MonoBehaviour
             {
                 if (i == 0) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.START);
                 else if (i == nodes.Count - 1) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.END);
-                else if (i < nodes.Count / 2) prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.NORMAL);
-                else prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.INVERTED);
+                else prefabSelected = SelectRoom(nodes[i].difficulty, false, RoomParameters.State.NORMAL);
             }
             else
             {
