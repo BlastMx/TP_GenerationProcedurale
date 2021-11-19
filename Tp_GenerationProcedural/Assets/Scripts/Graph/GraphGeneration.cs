@@ -50,8 +50,8 @@ public class GraphGeneration : MonoBehaviour
 
         //CreateHidden();
 
-        //InstanceSecondaryPath(5);
-        //InstanceSecondaryPath(2);
+        InstanceSecondaryPath(5);
+        InstanceSecondaryPath(2);
     }
 
     #region Abstract graph
@@ -117,7 +117,6 @@ public class GraphGeneration : MonoBehaviour
             connections[i].nextNode = nodes[i + 1];
 
             nodes[i].difficulty = value;
-            Debug.LogError(nodes[i] + " : " + nodes[i].difficulty);
 
             if (IsMultipleOf(i, nextDifficultyStep))
                 value++;
@@ -489,25 +488,6 @@ public class GraphGeneration : MonoBehaviour
                     && param.hasKey == hasKey) 
                 Selection.Add(param.GetComponent<Room>().gameObject);
         }
-
-        /*if (difficulty > 0)
-        {
-            for(int i = Selection.Count- 1; i >= 0; i--)
-            {
-                RoomParameters param = Selection[i].GetComponent<RoomParameters>();
-                if (param.difficulty != difficulty) Selection.Remove(Selection[i]);
-
-            }        
-        }
-
-        if (hasKey)
-        {
-            for (int i = Selection.Count - 1; i >= 0; i--)
-            {
-                RoomParameters param = Selection[i].GetComponent<RoomParameters>();
-                if (!param.hasKey) Selection.Remove(Selection[i]);
-            }
-        }*/
 
         selected = Selection[UnityEngine.Random.Range(0, Selection.Count)];
 
