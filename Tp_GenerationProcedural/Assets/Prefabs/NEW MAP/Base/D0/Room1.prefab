@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 4840953955217245732}
   - component: {fileID: 63137966644236372}
   m_Layer: 0
-  m_Name: Room1 (4)
+  m_Name: Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartRoom: 0
+  isStartRoom: 1
   position: {x: 0, y: 0}
   upDoor: {fileID: 9036202578516231007}
   downDoor: {fileID: 89241136388236442}

@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd64e0034f05b44581a553bb498242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartRoom: 1
+  isStartRoom: 0
   position: {x: 0, y: 0}
   upDoor: {fileID: 8395503259994078690}
   downDoor: {fileID: 637496508416825895}
